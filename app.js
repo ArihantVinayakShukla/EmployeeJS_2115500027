@@ -305,19 +305,55 @@ const employeePayrollData = [
 
 
 
+//UC12
+
+class EmployeesPayroll {
+    constructor(id, name, salary, gender, startDate) {
+        this.id = id;
+        this.name = name;
+        this.salary = salary;
+        this.gender = gender;
+        this.startDate = new Date(startDate); // Convert to Date object
+    }
+
+    // Method to get Employee Details
+    getDetails = () => `ID: ${this.id}, Name: ${this.name}, Gender: ${this.gender}, Salary: $${this.salary}, Start Date: ${this.startDate.toDateString()}`;
+}
+
+const employeesPayrollData = [
+    new EmployeesPayroll(1, "John Doe", 5000, "M", "2023-01-15"),
+    new EmployeesPayroll(2, "Jane Smith", 7000, "F", "2022-03-20"),
+    new EmployeesPayroll(3, "Alice Johnson", 6000, "F", "2021-06-25"),
+    new EmployeesPayroll(4, "Bob Brown", 8000, "M", "2020-12-10"),
+];
+
+
+
 
 
 //Method calls
 console.log(checkEmployeeAttendance()); // UC1 : checks if Employee is present or absent
+
 console.log("Employee Daily Wage: $" + calculateDailyWage());// UC2 : calculate daily employee wage
+
 console.log("Employee Daily Wage: $" + calculatesDailyWage());// UC3 : refactored function to get work hours
+
 console.log("Employee Monthly Wage (20 Days): $" + calculateMonthlyWage());// UC4: calculate monthly wage for 20 days
+
 console.log(`Total Days Worked: ${wageDetails.totalDays}, Total Hours Worked: ${wageDetails.totalHours}`);// UC5: Calculate Wages till Max Days (20) or Max Hours (160) is Reached
+
 console.log("Daily Wage Records:", wageDetailsDaily.dailyWageArray);// UC6: Store Daily Wages in an Array
+
 console.log("Total Wage Computed Using Map: $" + cumulativeWage);// UC8: Store Day-wise Wage in a Map and Compute Total Wage Using Map
+
 console.log("Full Working Days:", fullWorkingDays);// UC9: Operations using Arrow Functions
 console.log("Part-Time Working Days:", partWorkingDays);// UC9: Operations using Arrow Functions
 console.log("No Working Days:", noWorkingDays);// UC9: Operations using Arrow Functions
+
 console.log("Employee Daily Records:", wageDetailsWithObjects.dailyRecords);// UC10: Store Day, Hours Worked, and Wage Earned in a single object
+
 console.log("Employee Payroll Data:");// UC11: Employee payroll data creation
 employeePayrollData.forEach(employee => console.log(employee.getDetails()));// UC11: Employee payroll data creation
+
+console.log("Extended Employee Payroll Data:");// UC12: Extend Employee Payroll Data
+employeesPayrollData.forEach(employee => console.log(employee.getDetails()));// UC12: Extend Employee Payroll Data
