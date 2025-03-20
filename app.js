@@ -125,6 +125,36 @@ const calculateWageWithDailyRecords = () => {
 };
 const wageDetailsDaily = calculateWageWithDailyRecords();
 
+// UC7: Perform Array Operations
+
+// UC7A: Calc total Wage using Array forEach or reduce method
+const totalWageUsingReduce = wageDetailsDaily.dailyWageArray.reduce((total, day) => total + day.dailyWage, 0);
+console.log("Total Employee Wage using reduce(): $" + totalWageUsingReduce);
+
+// UC7B: Show the Day along with Daily Wage using Array map helper function
+const dailyWagesOnly = wageDetailsDaily.dailyWageArray.map(day => day.dailyWage);
+console.log("Daily Wages Array:", dailyWagesOnly);
+
+// UC7C: Show Days when Full time wage of 160 were earned using filter function
+const fullTimeWageDays = wageDetailsDaily.dailyWageArray.filter(day => day.workHours === 8);
+console.log("Days with Full-Time Wages:", fullTimeWageDays);
+
+// UC7D: Find the first occurrence when Full Time Wage was earned using find function
+const firstPartTimeDay = wageDetailsDaily.dailyWageArray.find(day => day.workHours === 4);
+console.log("First Day with 4 Hours Work:", firstPartTimeDay);
+
+// UC7E: Check if Every Element of Full Time Wage is truly holding Full time wage
+const allDaysWorked = wageDetailsDaily.dailyWageArray.every(day => day.dailyWage > 0);
+console.log("Did Employee Work Every Day? ", allDaysWorked);
+
+// UC7F: Check if there is any Part Time Wage
+const anyAbsentDays = wageDetailsDaily.dailyWageArray.some(day => day.dailyWage === 0);
+console.log("Was Employee Absent Any Day? ", anyAbsentDays);
+
+// UC7G: Find the number of days the Employee Worked
+const fullTimeDaysCount = wageDetailsDaily.dailyWageArray.reduce((count, day) => day.workHours === 8 ? count + 1 : count, 0);
+console.log("Total Full-Time Workdays:", fullTimeDaysCount);
+
 //Method calls
 console.log(checkEmployeeAttendance()); // UC1 : checks if Employee is present or absent
 console.log("Employee Daily Wage: $" + calculateDailyWage());// UC2 : calculate daily employee wage
