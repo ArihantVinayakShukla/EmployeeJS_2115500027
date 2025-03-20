@@ -93,9 +93,42 @@ const calculateConditionalWage = () => {
 
 const wageDetails = calculateConditionalWage();
 
+//UC6
+const calculateWageWithDailyRecords = () => {
+    let totalWage = 0;
+    let totalHours = 0;
+    let totalDays = 0;
+    let dailyWageArray = [];
+
+    while (totalDays < MAX_WORKING_DAYS && totalHours < MAX_WORKING_HOURS) {
+        let empType = Math.floor(Math.random() * 3); 
+        let workHours = getWorkHours(empType);
+
+        if (totalHours + workHours > MAX_WORKING_HOURS) {
+            workHours = MAX_WORKING_HOURS - totalHours; 
+        }
+
+        let dailyWage = workHours * WAGE_PER_HOUR;
+        dailyWageArray.push({ day: totalDays + 1, workHours: workHours, dailyWage: dailyWage });
+
+        totalHours += workHours;
+        totalWage += dailyWage;
+        totalDays++;
+    }
+
+    return {
+        totalWage: totalWage,
+        totalDays: totalDays,
+        totalHours: totalHours,
+        dailyWageArray: dailyWageArray
+    };
+};
+const wageDetailsDaily = calculateWageWithDailyRecords();
+
 //Method calls
 console.log(checkEmployeeAttendance()); // UC1 : checks if Employee is present or absent
 console.log("Employee Daily Wage: $" + calculateDailyWage());// UC2 : calculate daily employee wage
 console.log("Employee Daily Wage: $" + calculatesDailyWage());// UC3 : refactored function to get work hours
 console.log("Employee Monthly Wage (20 Days): $" + calculateMonthlyWage());// UC4: calculate monthly wage for 20 days
 console.log(`Total Days Worked: ${wageDetails.totalDays}, Total Hours Worked: ${wageDetails.totalHours}`);// UC5: Calculate Wages till Max Days (20) or Max Hours (160) is Reached
+console.log("Daily Wage Records:", wageDetailsDaily.dailyWageArray);// UC6: Store Daily Wages in an Array
