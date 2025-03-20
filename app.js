@@ -329,6 +329,38 @@ const employeesPayrollData = [
 
 
 
+//UC13
+class EmployeePayrolls {
+    constructor(id, name, salary, gender, startDate) {
+        try {
+            this.id = id;
+            this.name = this.validateName(name);
+            this.salary = salary;
+            this.gender = gender;
+            this.startDate = new Date(startDate);
+        } catch (error) {
+            console.error(`Error: ${error.message}`);
+        }
+    }
+
+    
+    validateName = (name) => {
+        const namePattern = /^[A-Z][a-zA-Z]{2,}$/;
+        if (!namePattern.test(name)) {
+            throw new Error("Invalid Name: Name must start with a capital letter and be at least 3 characters long.");
+        }
+        return name;
+    };
+
+    getDetails = () => `ID: ${this.id}, Name: ${this.name}, Gender: ${this.gender}, Salary: $${this.salary}, Start Date: ${this.startDate.toDateString()}`;
+}
+
+const employees = [
+    new EmployeePayrolls(1, "John", 5000, "M", "2023-01-15"),
+    new EmployeePayrolls(2, "jane", 7000, "F", "2022-03-20"),
+    new EmployeePayrolls(3, "Al", 6000, "F", "2021-06-25"),  
+    new EmployeePayrolls(4, "Alice", 8000, "F", "2020-12-10") 
+];
 
 
 //Method calls
@@ -346,14 +378,27 @@ console.log("Daily Wage Records:", wageDetailsDaily.dailyWageArray);// UC6: Stor
 
 console.log("Total Wage Computed Using Map: $" + cumulativeWage);// UC8: Store Day-wise Wage in a Map and Compute Total Wage Using Map
 
+
 console.log("Full Working Days:", fullWorkingDays);// UC9: Operations using Arrow Functions
 console.log("Part-Time Working Days:", partWorkingDays);// UC9: Operations using Arrow Functions
 console.log("No Working Days:", noWorkingDays);// UC9: Operations using Arrow Functions
 
 console.log("Employee Daily Records:", wageDetailsWithObjects.dailyRecords);// UC10: Store Day, Hours Worked, and Wage Earned in a single object
 
+
 console.log("Employee Payroll Data:");// UC11: Employee payroll data creation
 employeePayrollData.forEach(employee => console.log(employee.getDetails()));// UC11: Employee payroll data creation
 
+
 console.log("Extended Employee Payroll Data:");// UC12: Extend Employee Payroll Data
 employeesPayrollData.forEach(employee => console.log(employee.getDetails()));// UC12: Extend Employee Payroll Data
+
+
+console.log("\nValid Employees:");// UC13: Validate Employee Name Using Regex and Try-Catch
+employees.forEach(employee => {// UC13: Validate Employee Name Using Regex and Try-Catch
+    if (employee.name) console.log(employee.getDetails());// UC13: Validate Employee Name Using Regex and Try-Catch
+});// UC13: Validate Employee Name Using Regex and Try-Catch
+
+
+
+
