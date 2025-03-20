@@ -170,9 +170,11 @@ console.log("Total Full-Time Workdays:", fullTimeDaysCount);
 
 //UC8
 const dailyWageMap = new Map();
+const dailyHourMap = new Map();
 
 wageDetailsDaily.dailyWageArray.forEach(day => {
     dailyWageMap.set(day.day, { dailyWage: day.dailyWage, totalWageSoFar: 0 });
+    dailyHourMap.set(day.day, day.workHours); 
 });
 
 let cumulativeWage = 0;
@@ -181,8 +183,32 @@ dailyWageMap.forEach((value, key) => {
     dailyWageMap.set(key, { dailyWage: value.dailyWage, totalWageSoFar: cumulativeWage });
 });
 
-console.log("Day-wise Wage Map:");
-console.log([...dailyWageMap.entries()]);
+console.log("Day-wise Wage Map:", [...dailyWageMap.entries()]);
+console.log("Day-wise Hour Map:", [...dailyHourMap.entries()]);
+
+
+
+
+//UC9
+
+// UC9a: Calculate total wage and total hours worked using arrow functions
+const totalWageFromMap = [...dailyWageMap.values()].reduce((sum, day) => sum + day.dailyWage, 0);
+const totalHoursFromMap = [...dailyHourMap.values()].reduce((sum, hours) => sum + hours, 0);
+
+console.log(`Total Wage (Using Map): $${totalWageFromMap}, Total Hours Worked: ${totalHoursFromMap}`);
+
+// UC9b: Categorize Full Working Days, Part-time Days, and No Working Days
+const fullWorkingDays = [...dailyHourMap.entries()]
+    .filter(([day, hours]) => hours === FULL_TIME_HOURS)
+    .map(([day, hours]) => day);
+
+const partWorkingDays = [...dailyHourMap.entries()]
+    .filter(([day, hours]) => hours === PART_TIME_HOURS)
+    .map(([day, hours]) => day);
+
+const noWorkingDays = [...dailyHourMap.entries()]
+    .filter(([day, hours]) => hours === 0)
+    .map(([day, hours]) => day);
 
 //Method calls
 console.log(checkEmployeeAttendance()); // UC1 : checks if Employee is present or absent
@@ -192,3 +218,6 @@ console.log("Employee Monthly Wage (20 Days): $" + calculateMonthlyWage());// UC
 console.log(`Total Days Worked: ${wageDetails.totalDays}, Total Hours Worked: ${wageDetails.totalHours}`);// UC5: Calculate Wages till Max Days (20) or Max Hours (160) is Reached
 console.log("Daily Wage Records:", wageDetailsDaily.dailyWageArray);// UC6: Store Daily Wages in an Array
 console.log("Total Wage Computed Using Map: $" + cumulativeWage);// UC8: Store Day-wise Wage in a Map and Compute Total Wage Using Map
+console.log("Full Working Days:", fullWorkingDays);// UC9: Operations using Arrow Functions
+console.log("Part-Time Working Days:", partWorkingDays);// UC9: Operations using Arrow Functions
+console.log("No Working Days:", noWorkingDays);// UC9: Operations using Arrow Functions
