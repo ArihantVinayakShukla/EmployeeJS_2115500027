@@ -210,6 +210,50 @@ const noWorkingDays = [...dailyHourMap.entries()]
     .filter(([day, hours]) => hours === 0)
     .map(([day, hours]) => day);
 
+
+
+//UC10
+const employeeDailyRecords = [];
+
+const calculateWageWithObjects = () => {
+    let totalWage = 0;
+    let totalHours = 0;
+    let totalDays = 0;
+
+    while (totalDays < MAX_WORKING_DAYS && totalHours < MAX_WORKING_HOURS) {
+        let empType = Math.floor(Math.random() * 3);
+        let workHours = getWorkHours(empType);
+
+        if (totalHours + workHours > MAX_WORKING_HOURS) {
+            workHours = MAX_WORKING_HOURS - totalHours;
+        }
+
+        let dailyWage = workHours * WAGE_PER_HOUR;
+
+        let dailyRecord = {
+            day: totalDays + 1,
+            workHours: workHours,
+            dailyWage: dailyWage
+        };
+
+        employeeDailyRecords.push(dailyRecord);
+
+        totalHours += workHours;
+        totalWage += dailyWage;
+        totalDays++;
+    }
+
+    return {
+        totalWage: totalWage,
+        totalDays: totalDays,
+        totalHours: totalHours,
+        dailyRecords: employeeDailyRecords
+    };
+};
+
+const wageDetailsWithObjects = calculateWageWithObjects();
+
+
 //Method calls
 console.log(checkEmployeeAttendance()); // UC1 : checks if Employee is present or absent
 console.log("Employee Daily Wage: $" + calculateDailyWage());// UC2 : calculate daily employee wage
@@ -221,3 +265,4 @@ console.log("Total Wage Computed Using Map: $" + cumulativeWage);// UC8: Store D
 console.log("Full Working Days:", fullWorkingDays);// UC9: Operations using Arrow Functions
 console.log("Part-Time Working Days:", partWorkingDays);// UC9: Operations using Arrow Functions
 console.log("No Working Days:", noWorkingDays);// UC9: Operations using Arrow Functions
+console.log("Employee Daily Records:", wageDetailsWithObjects.dailyRecords);// UC10: Store Day, Hours Worked, and Wage Earned in a single object
