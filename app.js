@@ -363,6 +363,78 @@ const employees = [
 ];
 
 
+//UC14
+class EmployeesPayrolls {
+    constructor(id, name, salary, gender, startDate) {
+        try {
+            this.id = this.validateId(id);
+            this.name = this.validateName(name);
+            this.salary = this.validateSalary(salary);
+            this.gender = this.validateGender(gender);
+            this.startDate = new Date(startDate);
+        } catch (error) {
+            console.error(`Error: ${error.message}`);
+        }
+    }
+
+    // Validate Employee ID (Must be a positive non-zero number)
+    validateId = (id) => {
+        if (!Number.isInteger(id) || id <= 0) {
+            throw new Error("Invalid ID: Must be a positive non-zero integer.");
+        }
+        return id;
+    };
+
+    // Validate Name (First letter uppercase, at least 3 chars)
+    validateName = (name) => {
+        const namePattern = /^[A-Z][a-zA-Z]{2,}$/;
+        if (!namePattern.test(name)) {
+            throw new Error("Invalid Name: Must start with a capital letter and have at least 3 characters.");
+        }
+        return name;
+    };
+
+    // Validate Salary (Must be a positive non-zero number)
+    validateSalary = (salary) => {
+        if (isNaN(salary) || salary <= 0) {
+            throw new Error("Invalid Salary: Must be a positive non-zero number.");
+        }
+        return salary;
+    };
+
+    // Validate Gender (Must be 'M' or 'F')
+    validateGender = (gender) => {
+        if (!/^(M|F)$/.test(gender)) {
+            throw new Error("Invalid Gender: Must be 'M' or 'F'.");
+        }
+        return gender;
+    };
+
+    // Validate Start Date (Must not be in the future)
+    validateStartDate = (date) => {
+        const startDate = new Date(date);
+        const today = new Date();
+        if (startDate > today) {
+            console.error("Invalid Date: Start Date cannot be in the future.");
+            return null;
+        }
+        return startDate;
+    };
+
+    getDetails = () => {
+        return `ID: ${this.id}, Name: ${this.name}, Gender: ${this.gender}, Salary: $${this.salary}, Start Date: ${this.startDate}`;
+    };
+}
+
+const Employee = [
+    new EmployeesPayrolls(1, "John", 5000, "M", "2023-01-15"), 
+    new EmployeesPayrolls(-2, "Alice", 7000, "F", "2022-03-20"),
+    new EmployeesPayrolls(3, "Bob", -6000, "M", "2021-06-25"), 
+    new EmployeesPayrolls(4, "Emma", 8000, "X", "2020-12-10"), 
+    new EmployeesPayrolls(5, "Tom", 9000, "M", "2026-12-10") 
+];
+
+
 //Method calls
 console.log(checkEmployeeAttendance()); // UC1 : checks if Employee is present or absent
 
@@ -400,5 +472,9 @@ employees.forEach(employee => {// UC13: Validate Employee Name Using Regex and T
 });// UC13: Validate Employee Name Using Regex and Try-Catch
 
 
+console.log("\nEmployee Details:");// UC14: Employee Payroll Class with Full Validations
+Employee.forEach(employee => {// UC14: Employee Payroll Class with Full Validations
+    if (employee.id) console.log(employee.getDetails());// UC14: Employee Payroll Class with Full Validations
+});// UC14: Employee Payroll Class with Full Validations
 
 
