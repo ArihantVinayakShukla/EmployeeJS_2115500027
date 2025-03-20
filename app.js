@@ -9,6 +9,7 @@ const checkEmployeeAttendance = () => {
 }
 
 
+
 //UC2
 const WAGE_PER_HOUR = 20;
 const FULL_TIME_HOURS = 8;
@@ -34,6 +35,8 @@ const getWorkHours = () => {
 
 const calculateDailyWage = () => getWorkHours() * WAGE_PER_HOUR;
 
+
+
 //UC3
 const getWorkingHours = () => {
     let empType = Math.floor(Math.random() * 3); 
@@ -50,6 +53,8 @@ const getWorkingHours = () => {
 
 const calculatesDailyWage = () => getWorkingHours() * WAGE_PER_HOUR;
 
+
+
 //UC4
 const WORKING_DAYS_PER_MONTH = 20;
 
@@ -60,6 +65,8 @@ const calculateMonthlyWage = () => {
     }
     return totalWage;
 };
+
+
 
 //UC5
 const MAX_WORKING_DAYS = 20;  
@@ -93,6 +100,8 @@ const calculateConditionalWage = () => {
 
 const wageDetails = calculateConditionalWage();
 
+
+
 //UC6
 const calculateWageWithDailyRecords = () => {
     let totalWage = 0;
@@ -125,6 +134,8 @@ const calculateWageWithDailyRecords = () => {
 };
 const wageDetailsDaily = calculateWageWithDailyRecords();
 
+
+
 // UC7: Perform Array Operations
 
 // UC7A: Calc total Wage using Array forEach or reduce method
@@ -155,6 +166,24 @@ console.log("Was Employee Absent Any Day? ", anyAbsentDays);
 const fullTimeDaysCount = wageDetailsDaily.dailyWageArray.reduce((count, day) => day.workHours === 8 ? count + 1 : count, 0);
 console.log("Total Full-Time Workdays:", fullTimeDaysCount);
 
+
+
+//UC8
+const dailyWageMap = new Map();
+
+wageDetailsDaily.dailyWageArray.forEach(day => {
+    dailyWageMap.set(day.day, { dailyWage: day.dailyWage, totalWageSoFar: 0 });
+});
+
+let cumulativeWage = 0;
+dailyWageMap.forEach((value, key) => {
+    cumulativeWage += value.dailyWage;
+    dailyWageMap.set(key, { dailyWage: value.dailyWage, totalWageSoFar: cumulativeWage });
+});
+
+console.log("Day-wise Wage Map:");
+console.log([...dailyWageMap.entries()]);
+
 //Method calls
 console.log(checkEmployeeAttendance()); // UC1 : checks if Employee is present or absent
 console.log("Employee Daily Wage: $" + calculateDailyWage());// UC2 : calculate daily employee wage
@@ -162,3 +191,4 @@ console.log("Employee Daily Wage: $" + calculatesDailyWage());// UC3 : refactore
 console.log("Employee Monthly Wage (20 Days): $" + calculateMonthlyWage());// UC4: calculate monthly wage for 20 days
 console.log(`Total Days Worked: ${wageDetails.totalDays}, Total Hours Worked: ${wageDetails.totalHours}`);// UC5: Calculate Wages till Max Days (20) or Max Hours (160) is Reached
 console.log("Daily Wage Records:", wageDetailsDaily.dailyWageArray);// UC6: Store Daily Wages in an Array
+console.log("Total Wage Computed Using Map: $" + cumulativeWage);// UC8: Store Day-wise Wage in a Map and Compute Total Wage Using Map
