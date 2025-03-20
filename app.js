@@ -254,6 +254,59 @@ const calculateWageWithObjects = () => {
 const wageDetailsWithObjects = calculateWageWithObjects();
 
 
+
+//UC11
+
+// UC11a: Calc total Wage and total hours worked
+const totalWageArrow = employeeDailyRecords.reduce((total, day) => total + day.dailyWage, 0);
+const totalHoursArrow = employeeDailyRecords.reduce((total, day) => total + day.workHours, 0);
+
+console.log(`Total Wage: $${totalWageArrow}, Total Hours Worked: ${totalHoursArrow}`);
+
+// UC11b: Show the full workings days using foreach
+console.log("Full Working Days:");
+employeeDailyRecords.forEach(day => {
+    if (day.workHours === FULL_TIME_HOURS) console.log(`Day ${day.day}`);
+});
+
+// UC11c: Show Part working days using Map by reducing to String Array
+const partWorkingDaysStringArray = employeeDailyRecords
+    .filter(day => day.workHours === PART_TIME_HOURS)
+    .map(day => `Day ${day.day}`);
+
+console.log("Part-Time Working Days:", partWorkingDaysStringArray);
+
+// UC11d: No working days only using Map function
+const noWorkingDaysArray = employeeDailyRecords
+    .filter(day => day.workHours === 0)
+    .map(day => `Day ${day.day}`);
+
+console.log("No Working Days:", noWorkingDaysArray);
+
+
+//UC11
+class EmployeePayroll {
+    constructor(id, name, salary) {
+        this.id = id;
+        this.name = name;
+        this.salary = salary;
+    }
+
+    getDetails = () => `ID: ${this.id}, Name: ${this.name}, Salary: $${this.salary}`;
+}
+
+const employeePayrollData = [
+    new EmployeePayroll(1, "Arihant Vinayak Shukla", 5000),
+    new EmployeePayroll(2, "Dhruv Kushwah", 7000),
+    new EmployeePayroll(3, "Yuvraj Srivastava", 6000),
+    new EmployeePayroll(4, "Shivansh Pathak", 8000),
+    new EmployeePayroll(4, "Aman Bajpai", 10000),
+];
+
+
+
+
+
 //Method calls
 console.log(checkEmployeeAttendance()); // UC1 : checks if Employee is present or absent
 console.log("Employee Daily Wage: $" + calculateDailyWage());// UC2 : calculate daily employee wage
@@ -266,3 +319,5 @@ console.log("Full Working Days:", fullWorkingDays);// UC9: Operations using Arro
 console.log("Part-Time Working Days:", partWorkingDays);// UC9: Operations using Arrow Functions
 console.log("No Working Days:", noWorkingDays);// UC9: Operations using Arrow Functions
 console.log("Employee Daily Records:", wageDetailsWithObjects.dailyRecords);// UC10: Store Day, Hours Worked, and Wage Earned in a single object
+console.log("Employee Payroll Data:");// UC11: Employee payroll data creation
+employeePayrollData.forEach(employee => console.log(employee.getDetails()));// UC11: Employee payroll data creation
