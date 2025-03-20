@@ -50,7 +50,19 @@ const getWorkingHours = () => {
 
 const calculatesDailyWage = () => getWorkingHours() * WAGE_PER_HOUR;
 
+//UC4
+const WORKING_DAYS_PER_MONTH = 20;
+
+const calculateMonthlyWage = () => {
+    let totalWage = 0;
+    for (let day = 1; day <= WORKING_DAYS_PER_MONTH; day++) {
+        totalWage += calculatesDailyWage();
+    }
+    return totalWage;
+};
+
 //Method calls
 console.log(checkEmployeeAttendance()); // UC1 : checks if Employee is present or absent
 console.log("Employee Daily Wage: $" + calculateDailyWage());// UC2 : calculate daily employee wage
-console.log("Employee Daily Wage: $" + calculatesDailyWage());// UC2 : refactored function to get work hours
+console.log("Employee Daily Wage: $" + calculatesDailyWage());// UC3 : refactored function to get work hours
+console.log("Employee Monthly Wage (20 Days): $" + calculateMonthlyWage());// UC4: calculate monthly wage for 20 days
